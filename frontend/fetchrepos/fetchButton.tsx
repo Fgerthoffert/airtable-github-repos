@@ -29,7 +29,6 @@ import { getFields } from "./airtable/getFields";
 import { formatRecords } from "./airtable/formatRecords";
 import { updateFields } from "./airtable/updateFields";
 
-const maxFetchNodes = 10;
 const maxAirTableNodes = 50;
 
 export function FetchButton({ isLoadingAtom, logsAtom, progressAtom }) {
@@ -144,12 +143,12 @@ export function FetchButton({ isLoadingAtom, logsAtom, progressAtom }) {
         },
         secondary: {
           progress: 0.05,
-          msg: `Fetching metadata for the first ${maxFetchNodes} repositories`,
+          msg: `Fetching metadata for the first ${githubMaxNodesRepos} repositories`,
         },
       });
 
       // Split the repos in multiple sub-arrays for sending furthre calls to GitHub API
-      const githubChunks = chunkArray(fetchedOrgRepos, maxFetchNodes);
+      const githubChunks = chunkArray(fetchedOrgRepos, githubMaxNodesRepos);
       let fetchedRepos: Array<any> = [];
       for (const githubChunk of githubChunks) {
         let retries = 0;
