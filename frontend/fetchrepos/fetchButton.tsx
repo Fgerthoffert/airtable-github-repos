@@ -8,7 +8,7 @@ import {
 } from "@airtable/blocks/ui";
 
 import React, { useState } from "react";
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import pino from "pino";
 
 import {
@@ -56,8 +56,8 @@ export function FetchButton({ isLoadingAtom, logsAtom, progressAtom }) {
   const [airtableTableName] = useState(airtableTableNameExists || "");
 
   const [isLoading, setLoading] = useAtom(isLoadingAtom);
-  const [logs, setLogs] = useAtom(logsAtom);
-  const [progress, setProgress] = useAtom(progressAtom);
+  const setLogs = useSetAtom(logsAtom);
+  const setProgress = useSetAtom(progressAtom);
 
   const base = useBase();
 
@@ -210,8 +210,8 @@ export function FetchButton({ isLoadingAtom, logsAtom, progressAtom }) {
           }
           table = base.getTableByName(airtableTableName);
         }
-        const createUnknownRecordCheckResult =
-          table.checkPermissionsForCreateRecord();
+
+        table.checkPermissionsForCreateRecord();
 
         setProgress({
           primary: {
